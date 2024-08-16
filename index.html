@@ -2,6 +2,7 @@
 <html lang="ja">
 <head>
     <meta charset="utf-8" />
+    <link rel="stylesheet" href="style.css">
     <script type="importmap">
         {
             "imports": {
@@ -10,37 +11,10 @@
         }
     </script>
     <script type="module" src="script.js"></script>
-    <style>
-        #resetButton {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            padding: 10px 20px;
-            background-color: #007BFF;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        #rotateButton {
-            position: absolute;
-            top: 50px;
-            right: 10px;
-            padding: 10px 20px;
-            background-color: #007BFF;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        #rotateButton.rotating {
-           background-color: #FF6347;
-        }
-    </style>
 </head>
 <body>
     <canvas id="myCanvas"></canvas>
-    <button id="resetButton">リセット</button>
-    <button id="rotateButton">回転</button>
+    <button id="resetButton" class="button">リセット</button>
+    <button id="rotateButton" class="button">回転</button>
 </body>
 </html>

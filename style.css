@@ -1,0 +1,24 @@
+.button {
+    position: absolute;
+    padding: 10px 20px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    left: 10px;
+}
+
+#resetButton {
+    top: 10px;
+}
+
+#rotateButton {
+    top: 70px;
+}
+
+/* 回転時に表示される「停止」ボタン */
+#rotateButton.rotating {
+    background-color: #FF6347;
+}
