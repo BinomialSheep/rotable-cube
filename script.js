@@ -122,6 +122,7 @@ function setupMouseAndTouchControls(box) {
   const onTouchEnd = () => (isDragging = false);
   const onTouchMove = (event) => {
     if (isDragging && event.touches.length === 1) {
+      event.preventDefault(); // スクロールを無効にする
       const touch = event.touches[0];
       const deltaMove = {
         x: touch.clientX - previousPosition.x,
@@ -138,7 +139,7 @@ function setupMouseAndTouchControls(box) {
   document.addEventListener("mousemove", onMouseMove);
   document.addEventListener("touchstart", onTouchStart);
   document.addEventListener("touchend", onTouchEnd);
-  document.addEventListener("touchmove", onTouchMove);
+  document.addEventListener("touchmove", onTouchMove, { passive: false });
 }
 
 function rotateBox(box, deltaMove) {
