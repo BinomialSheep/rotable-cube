@@ -95,26 +95,57 @@ function addFaceLabels(box) {
   });
 }
 
-function setupMouseControls(box) {
+function setupMouseAndTouchControls(box) {
   let isDragging = false;
-  let previousMousePosition = { x: 0, y: 0 };
+  let previousPosition = { x: 0, y: 0 };
 
-  document.addEventListener("mousedown", () => (isDragging = true));
-  document.addEventListener("mouseup", () => (isDragging = false));
-  document.addEventListener("mousemove", (event) => {
+  // マウスダウンイベント
+  const onMouseDown = () => (isDragging = true);
+  const onMouseUp = () => (isDragging = false);
+  const onMouseMove = (event) => {
     if (isDragging) {
       const deltaMove = {
-        x: event.offsetX - previousMousePosition.x,
-        y: event.offsetY - previousMousePosition.y,
+        x: event.offsetX - previousPosition.x,
+        y: event.offsetY - previousPosition.y,
       };
-      const deltaRotationQuaternion = new THREE.Quaternion().setFromEuler(
-        new THREE.Euler(toRadians(deltaMove.y), toRadians(deltaMove.x), 0, "XYZ")
-      );
-      box.quaternion.multiplyQuaternions(deltaRotationQuaternion, box.quaternion);
+      rotateBox(box, deltaMove);
     }
+    previousPosition = { x: event.offsetX, y: event.offsetY };
+  };
 
-    previousMousePosition = { x: event.offsetX, y: event.offsetY };
-  });
+  // タッチスタートイベント
+  const onTouchStart = (event) => {
+    isDragging = true;
+    const touch = event.touches[0];
+    previousPosition = { x: touch.clientX, y: touch.clientY };
+  };
+  const onTouchEnd = () => (isDragging = false);
+  const onTouchMove = (event) => {
+    if (isDragging && event.touches.length === 1) {
+      const touch = event.touches[0];
+      const deltaMove = {
+        x: touch.clientX - previousPosition.x,
+        y: touch.clientY - previousPosition.y,
+      };
+      rotateBox(box, deltaMove);
+      previousPosition = { x: touch.clientX, y: touch.clientY };
+    }
+  };
+
+  // イベントリスナーの追加
+  document.addEventListener("mousedown", onMouseDown);
+  document.addEventListener("mouseup", onMouseUp);
+  document.addEventListener("mousemove", onMouseMove);
+  document.addEventListener("touchstart", onTouchStart);
+  document.addEventListener("touchend", onTouchEnd);
+  document.addEventListener("touchmove", onTouchMove);
+}
+
+function rotateBox(box, deltaMove) {
+  const deltaRotationQuaternion = new THREE.Quaternion().setFromEuler(
+    new THREE.Euler(toRadians(deltaMove.y), toRadians(deltaMove.x), 0, "XYZ")
+  );
+  box.quaternion.multiplyQuaternions(deltaRotationQuaternion, box.quaternion);
 }
 
 const toRadians = (angle) => angle * (Math.PI / 180);
@@ -135,6 +166,6 @@ const box = createBoxWithEdges();
 
 scene.add(box);
 addFaceLabels(box);
-setupMouseControls(box);
+setupMouseAndTouchControls(box);
 
 animate(renderer, scene, camera);
