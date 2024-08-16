@@ -62,7 +62,7 @@ function createLabelMesh(text, width, height, fontSize) {
 }
 
 function addFaceLabels(box) {
-  const faceLabels = ["1", "2", "3", "4", "5", "6"];
+  const faceLabels = ["1", "6", "2", "5", "4", "3"];
   const facePositions = [
     new THREE.Vector3(0, 0, 200), // 前面
     new THREE.Vector3(0, 0, -200), // 背面
