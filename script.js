@@ -159,6 +159,14 @@ function animate(renderer, scene, camera) {
   animateScene();
 }
 
+function setupResetButton(box) {
+  const resetButton = document.getElementById("resetButton");
+  resetButton.addEventListener("click", () => {
+    box.position.set(0, 0, 0);
+    box.rotation.set(0, 0, 0);
+  });
+}
+
 // メイン処理
 const renderer = createRenderer();
 const scene = createScene();
@@ -168,5 +176,6 @@ const box = createBoxWithEdges();
 scene.add(box);
 addFaceLabels(box);
 setupMouseAndTouchControls(box);
+setupResetButton(box);
 
 animate(renderer, scene, camera);
