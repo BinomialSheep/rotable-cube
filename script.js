@@ -167,6 +167,27 @@ function setupResetButton(box) {
   });
 }
 
+let isRotating = false;
+let rotateInterval;
+function setupRotateButton(box) {
+  const rotateButton = document.getElementById("rotateButton");
+
+  rotateButton.addEventListener("click", () => {
+    if (isRotating) {
+      clearInterval(rotateInterval);
+      rotateButton.textContent = "回転";
+      rotateButton.classList.remove("rotating");
+    } else {
+      rotateInterval = setInterval(() => {
+        box.rotation.y += toRadians(5);
+      }, 100); // 100ms間隔で回転
+      rotateButton.textContent = "停止";
+      rotateButton.classList.add("rotating");
+    }
+    isRotating = !isRotating;
+  });
+}
+
 // メイン処理
 const renderer = createRenderer();
 const scene = createScene();
@@ -177,5 +198,6 @@ scene.add(box);
 addFaceLabels(box);
 setupMouseAndTouchControls(box);
 setupResetButton(box);
+setupRotateButton(box);
 
 animate(renderer, scene, camera);

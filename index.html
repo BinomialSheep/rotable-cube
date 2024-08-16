@@ -22,10 +22,25 @@
             border-radius: 5px;
             cursor: pointer;
         }
+        #rotateButton {
+            position: absolute;
+            top: 50px;
+            right: 10px;
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        #rotateButton.rotating {
+           background-color: #FF6347;
+        }
     </style>
 </head>
 <body>
     <canvas id="myCanvas"></canvas>
     <button id="resetButton">リセット</button>
+    <button id="rotateButton">回転</button>
 </body>
 </html>
